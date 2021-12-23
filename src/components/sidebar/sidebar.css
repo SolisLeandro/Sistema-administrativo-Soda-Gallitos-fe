@@ -1,0 +1,59 @@
+.topbar-general-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    
+    padding: 15% 5%;
+    width: 100%;
+
+    background-color: #19AACA;
+}
+
+.topbar-buttons-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40%;
+}
+
+.topbar-title {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 35px;
+    line-height: 58px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+
+    color: #FFFFFF;
+}
+
+.topbar-button {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 25px;
+    line-height: 43px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    margin: 6% 1%;
+
+    color: #FFFFFF;
+}
+
+.topbar-logOut {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 43px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    color: rgb(39, 71, 71);
+}
