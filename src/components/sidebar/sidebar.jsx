@@ -7,16 +7,16 @@ const Sidebar = () => {
         console.log("sesion cerrada")
     }
     return (
-        <div className="topbar-general-div">
+        <div className="sidebar-general-div">
             <div>
-                <Link to="/home" className="topbar-title">SODA GALLITOS</Link>
-                <div className="topbar-buttons-div">
-                    <Link to="admin" className="topbar-button">Administrador</Link>
-                    <Link to="kitchen" className="topbar-button">Cocina</Link>
-                    <Link to="cashier" className="topbar-button">Caja</Link>
+                <Link to="/home" className="sidebar-title">SODA GALLITOS</Link>
+                <div className="sidebar-buttons-div">
+                    <Link to="admin" className="sidebar-button">Administrador</Link>
+                    <Link to="kitchen" className="sidebar-button">Cocina</Link>
+                    <Link to="cashier" className="sidebar-button">Caja</Link>
                 </div>
             </div>
-            <Link to="/" className="topbar-logOut" onClick={logOut}>Cerrar Sesión</Link>
+            <Link to="/" className="sidebar-logOut" onClick={logOut}>Cerrar Sesión</Link>
         </div>
     )
 }

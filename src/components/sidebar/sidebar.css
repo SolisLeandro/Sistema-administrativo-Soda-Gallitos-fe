@@ -1,4 +1,4 @@
-.topbar-general-div {
+.sidebar-general-div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,14 +10,14 @@
     background-color: #19AACA;
 }
 
-.topbar-buttons-div {
+.sidebar-buttons-div {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 40%;
 }
 
-.topbar-title {
+.sidebar-title {
     font-family: Lato;
     font-style: normal;
     font-weight: 800;
@@ -30,7 +30,7 @@
     color: #FFFFFF;
 }
 
-.topbar-button {
+.sidebar-button {
     font-family: Lato;
     font-style: normal;
     font-weight: 800;
@@ -45,7 +45,7 @@
     color: #FFFFFF;
 }
 
-.topbar-logOut {
+.sidebar-logOut {
     font-family: Lato;
     font-style: normal;
     font-weight: 800;
