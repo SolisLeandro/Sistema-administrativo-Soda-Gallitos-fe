@@ -1,0 +1,59 @@
+.admin-general-div {
+    padding: 5% 7%;
+    width: 100%;
+}
+
+.admin-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.admin-title {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 43px;
+
+    color: #000000;
+    margin-bottom: 8%;
+}
+
+.admin-subtitle {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 33px;
+
+    color: #000000;
+}
+
+.admin-text {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+
+    margin: 25% 0%;
+
+    color: #000000;
+}
+
+.admin-button {
+    width: 242px;
+    height: 59px;
+    border: none;
+    border-radius: 22px;
+    cursor: pointer;
+    background-color: #4989DE;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14.7927px;
+    line-height: 18px;
+    color: white;
+}

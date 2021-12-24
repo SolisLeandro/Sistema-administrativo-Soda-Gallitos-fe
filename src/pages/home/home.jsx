@@ -1,7 +1,10 @@
 import React from "react"
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
-import Admin from "../admin/admin"
 import Sidebar from "../../components/sidebar/sidebar"
+import Admin from "../admin/admin"
+import Dishes from "../dishes/dishes"
+import Elements from "../elements/elements"
+import Tables from "../tables/tables"
 
 const Home = () => {
     return (
@@ -13,6 +16,9 @@ const Home = () => {
                 <Switch>
                     <Redirect exact from="/home" to="/home/admin" />
                     <Route path="/home/admin"> <Admin></Admin></Route>
+                    <Route path="/home/dishes"> <Dishes></Dishes></Route>
+                    <Route path="/home/elements"> <Elements></Elements></Route>
+                    <Route path="/home/tables"> <Tables></Tables></Route>
                 </Switch>
             </div>
         </div>
