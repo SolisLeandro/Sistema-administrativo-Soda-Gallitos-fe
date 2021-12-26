@@ -1,0 +1,133 @@
+.tables-general-div {
+    padding: 5% 7%;
+    width: 100%;
+}
+
+.tables-column {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tables-title {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 43px;
+
+    color: #000000;
+    margin-bottom: 5%;
+}
+
+.tables-subtitle {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 33px;
+
+    color: #000000;
+}
+
+.tables-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 5%;
+    height: 100%;
+    max-height: 92%;
+
+    border-radius: 15px;
+    background-color: #FBF3DF;
+}
+
+.tables-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin: 5% 0%;
+    max-height: 81%;
+    overflow: auto;
+}
+
+.tables-element-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 3% 0%;
+    padding: 0px 20px;
+
+    width: 85%;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #FFFBF0;
+}
+
+.tables-buttons-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.tables-text {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 22px;
+
+    color: #000000;
+}
+
+.tables-button {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 22px;
+    cursor: pointer;
+    background-color: #4989DE;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14.7927px;
+    line-height: 18px;
+    color: white;
+}
+
+.tables-button-disabled {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 22px;
+    background-color: #8f9daf;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14.7927px;
+    line-height: 18px;
+    color: white;
+}
+
+.tables-input {
+    border-color: #dddddd;
+    border-radius: 5px;
+    height: 20px;
+    width: 40%;
+    margin: 12px 0px;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 22px;
+
+    color: #000000;
+}
