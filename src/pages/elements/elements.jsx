@@ -50,7 +50,7 @@ const Elements = () => {
                         <div className="elements-container">
                             {elementsData.map((element) => {
                                 return (
-                                    <div className="elements-element-container">
+                                    <div key={element.id} className="elements-element-container">
                                         {editMode && element.id == currentElementEdit.id ?
                                             (
                                                 <input type="text"
@@ -133,7 +133,7 @@ const Elements = () => {
                                     setDeleteMode(!deleteMode)
                                     setEditMode(false)
                                 }}>
-                                Eliminar adicional
+                                Eliminar elemento
                             </button>
                         </div>
                     </div>
