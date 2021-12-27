@@ -84,7 +84,6 @@ const Tables = () => {
                                                     <img src={trashIcon} style={{ marginLeft: "10px", width: "24px", cursor: "pointer" }} 
                                                         onClick={async() => {
                                                             var response = await deleteTable(element.id)
-                                                            console.log(response)
                                                             getTablesInfo()
                                                             setDeleteMode(!deleteMode)
                                                         }}>
@@ -129,7 +128,7 @@ const Tables = () => {
                                     setAddMode(!addMode)
                                     setEditMode(false)
                                 }}>
-                                Añandir mesa
+                                Añadir mesa
                             </button>
                             <button className={addMode ? "tables-button-disabled" : "tables-button"}
                                 disabled={addMode}
