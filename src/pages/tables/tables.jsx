@@ -3,6 +3,7 @@ import "./tables.css"
 import editPenIcon from '../../assets/imgs/editPen.svg'
 import cancelIcon from '../../assets/imgs/cancel.svg'
 import trashIcon from '../../assets/imgs/trash.svg'
+import { createTable, updateTable, deleteTable, getTables } from "../../helpers/dbControllers/tablesDTO"
 
 const Tables = () => {
     const [tablesData, setTablesData] = useState([
@@ -30,11 +31,26 @@ const Tables = () => {
         setCurrentNameAdd("")
     }
 
-    function inputOnKeyDown(event) {
+    async function inputOnKeyDown(event) {
         if (event.key === 'Enter' && editMode) {
-            //update
+            await updateTable(currentTableEdit.id,currentNameEdit)
+            getTablesInfo()
+            setEditMode(!editMode)
         }
     }
+
+    async function getTablesInfo(){
+        var tablesResponse = await getTables()
+        var tables = tablesResponse.map((element) => {
+            return {id: element.Id, name: element.Nombre}
+        })
+        setTablesData(tables)
+    }
+
+    useEffect(() => {
+        getTablesInfo()
+    }, [])
+
     return (
         <div className="tables-general-div">
             <h1 className="tables-title">Opciones Mesas</h1>
@@ -65,7 +81,14 @@ const Tables = () => {
                                         <div style={{ display: "flex" }}>
                                             {deleteMode ?
                                                 (
-                                                    <img src={trashIcon} style={{ marginLeft: "10px", width: "24px", cursor: "pointer" }}></img>
+                                                    <img src={trashIcon} style={{ marginLeft: "10px", width: "24px", cursor: "pointer" }} 
+                                                        onClick={async() => {
+                                                            var response = await deleteTable(element.id)
+                                                            console.log(response)
+                                                            getTablesInfo()
+                                                            setDeleteMode(!deleteMode)
+                                                        }}>
+                                                    </img>
                                                 ) :
                                                 (
                                                     editMode && element.id == currentTableEdit.id ?
@@ -139,8 +162,12 @@ const Tables = () => {
                                     </div>
                                     <div className="tables-buttons-row">
                                         <button className="tables-button"
-                                            onClick={() => { closeAddPanel(!addMode) }}>
-                                            Añandir
+                                            onClick={async() => { 
+                                                await createTable(currentNameAdd) 
+                                                getTablesInfo()
+                                                closeAddPanel(!addMode)
+                                            }}>
+                                            Añadir
                                         </button>
                                         <button className="tables-button"
                                             onClick={() => { closeAddPanel(!addMode) }}>
