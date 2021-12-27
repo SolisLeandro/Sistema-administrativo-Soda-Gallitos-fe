@@ -3,6 +3,7 @@ import "./elements.css"
 import editPenIcon from '../../assets/imgs/editPen.svg'
 import cancelIcon from '../../assets/imgs/cancel.svg'
 import trashIcon from '../../assets/imgs/trash.svg'
+import { createElement, updateElement, deleteElement, getElements } from "../../helpers/dbControllers/elementsDTO"
 
 const Elements = () => {
     const [elementsData, setElementsData] = useState([
@@ -33,11 +34,25 @@ const Elements = () => {
         setCurrentPriceAdd("")
     }
 
-    function inputOnKeyDown(event) {
+    async function inputOnKeyDown(event) {
         if (event.key === 'Enter' && editMode) {
-            //update
+            await updateElement(currentElementEdit.id, currentNameEdit, 0, currentPriceEdit)
+            getElementsInfo()
+            setEditMode(!editMode)
         }
     }
+
+    async function getElementsInfo() {
+        var elementsResponse = await getElements()
+        var elements = elementsResponse.map((element) => {
+            return { id: element.Id, name: element.Nombre, price: element.Precio }
+        })
+        setElementsData(elements)
+    }
+
+    useEffect(() => {
+        getElementsInfo()
+    }, [])
     return (
         <div className="elements-general-div">
             <h1 className="elements-title">Opciones Elementos</h1>
@@ -83,7 +98,13 @@ const Elements = () => {
 
                                             {deleteMode ?
                                                 (
-                                                    <img src={trashIcon} style={{ marginLeft: "10px", width: "24px", cursor: "pointer" }}></img>
+                                                    <img src={trashIcon} style={{ marginLeft: "10px", width: "24px", cursor: "pointer" }}
+                                                        onClick={async() => {
+                                                            var response = await deleteElement(element.id)
+                                                            getElementsInfo()
+                                                            setDeleteMode(!deleteMode)
+                                                        }}>
+                                                    </img>
                                                 ) :
                                                 (
                                                     editMode && element.id == currentElementEdit.id ?
@@ -125,7 +146,7 @@ const Elements = () => {
                                     setAddMode(!addMode)
                                     setEditMode(false)
                                 }}>
-                                Añandir elemento
+                                Añadir elemento
                             </button>
                             <button className={addMode ? "elements-button-disabled" : "elements-button"}
                                 disabled={addMode}
@@ -168,8 +189,12 @@ const Elements = () => {
                                     </div>
                                     <div className="elements-buttons-row">
                                         <button className="elements-button"
-                                            onClick={() => { closeAddPanel(!addMode) }}>
-                                            Añandir
+                                            onClick={async () => {
+                                                await createElement(currentNameAdd, 0, currentPriceAdd)
+                                                getElementsInfo()
+                                                closeAddPanel(!addMode)
+                                            }}>
+                                            Añadir
                                         </button>
                                         <button className="elements-button"
                                             onClick={() => { closeAddPanel(!addMode) }}>
