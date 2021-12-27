@@ -1,0 +1,199 @@
+.dishes-general-div {
+    padding: 5% 7%;
+    width: 100%;
+}
+
+.dishes-column {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    height: 100%;
+}
+
+.dishes-title {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 43px;
+
+    color: #000000;
+    margin-bottom: 5%;
+}
+
+.dishes-subtitle-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 25%;
+}
+
+.dishes-subtitle {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 33px;
+
+    color: #000000;
+}
+
+.dishes-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 5%;
+    height: 100%;
+    max-height: 92%;
+
+    border-radius: 15px;
+    background-color: #FBF3DF;
+}
+
+.dishes-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin: 5% 0%;
+    max-height: 81%;
+    overflow: auto;
+}
+
+.dishes-element-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 3% 0%;
+    padding: 0px 20px;
+    padding-right: 11%;
+
+    width: 75%;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #FFFBF0;
+}
+
+.dishes-buttons-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.dishes-text {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 22px;
+
+    color: #000000;
+}
+
+.dishes-button {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 22px;
+    cursor: pointer;
+    background-color: #4989DE;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14.7927px;
+    line-height: 18px;
+    color: white;
+}
+
+.dishes-button-2 {
+    width: 130px;
+    height: 40px;
+    border: none;
+    border-radius: 22px;
+    cursor: pointer;
+    background-color: #4989DE;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14.7927px;
+    line-height: 18px;
+    color: white;
+}
+
+.dishes-button-disabled {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 22px;
+    background-color: #8f9daf;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14.7927px;
+    line-height: 18px;
+    color: white;
+}
+
+.dishes-button-disabled-2 {
+    width: 130px;
+    height: 40px;
+    border: none;
+    border-radius: 22px;
+    background-color: #8f9daf;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14.7927px;
+    line-height: 18px;
+    color: white;
+}
+
+.dishes-input {
+    border-color: #dddddd;
+    border-radius: 5px;
+    height: 20px;
+    width: 40%;
+    margin: 12px 0px;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 22px;
+
+    color: #000000;
+}
+
+.dishes-input-subtitle {
+    border-color: #dddddd;
+    border-radius: 5px;
+    height: 35px;
+    width: 50%;
+    margin: 19px 0px;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 33px;
+
+    color: #000000;
+}
+
+.dishes-add-element-container {
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    padding: 10%;
+}
