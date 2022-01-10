@@ -4,6 +4,7 @@ import editPenIcon from '../../assets/imgs/editPen.svg'
 import cancelIcon from '../../assets/imgs/cancel.svg'
 import trashIcon from '../../assets/imgs/trash.svg'
 import { createElement, updateElement, deleteElement, getElements } from "../../helpers/dbControllers/elementsDTO"
+import Swal from "sweetalert2"
 
 const Elements = () => {
     const [elementsData, setElementsData] = useState([
@@ -28,6 +29,63 @@ const Elements = () => {
     const [currentNameAdd, setCurrentNameAdd] = useState("")
     const [currentPriceAdd, setCurrentPriceAdd] = useState("")
 
+    //CRUD
+    //Create
+    async function createElementFunction() {
+        var response = await createElement(currentNameAdd, 0, currentPriceAdd)
+        if (response.status == 200) {
+            getElementsInfo()
+            Swal.fire("¡Elemento creado correctamente!", "", "success")
+        } else {
+            Swal.fire("¡Error al crear el elemento!", "Ocurrio un error al obtener la respuesta del servidor", "error")
+            console.log(response)
+        }
+        closeAddPanel(!addMode)
+    }
+
+    //Read
+    async function getElementsInfo() {
+        var elementsResponse = await getElements()
+        if(elementsResponse.status == 200){
+            if (elementsResponse.data) {
+                var elements = elementsResponse.data.map((element) => {
+                    return { id: element.Id, name: element.Nombre, price: element.Precio }
+                })
+                setElementsData(elements)
+                return
+            }
+        }
+        Swal.fire("¡Error al obtener los elementos!", "Ocurrio un error al obtener la respuesta del servidor", "error")
+    }
+
+    //Update
+    async function updateElementFunction() {
+        var response = await updateElement(currentElementEdit.id, currentNameEdit, 0, currentPriceEdit)
+        if (response.status == 200) {
+            getElementsInfo()
+            Swal.fire("¡Elemento actualizado correctamente!", "", "success")
+        } else {
+            Swal.fire("¡Error al actualizar el elemento!", "Ocurrio un error al obtener la respuesta del servidor", "error")
+            console.log(response)
+        }
+        setEditMode(!editMode)
+    }
+
+    //Delete
+    async function deleteElementFunction(element){
+        var response = await deleteElement(element.id)
+        if (response.status == 200) {
+            getElementsInfo()
+            Swal.fire("¡Elemento eliminado correctamente!", "", "success")
+        } else {
+            Swal.fire("¡Error al eliminar el elemento!", "Ocurrio un error al obtener la respuesta del servidor", "error")
+            console.log(response)
+        }
+        setDeleteMode(!deleteMode)
+    }
+
+    //------------------------
+
     function closeAddPanel() {
         setAddMode(!addMode)
         setCurrentNameAdd("")
@@ -36,18 +94,8 @@ const Elements = () => {
 
     async function inputOnKeyDown(event) {
         if (event.key === 'Enter' && editMode) {
-            await updateElement(currentElementEdit.id, currentNameEdit, 0, currentPriceEdit)
-            getElementsInfo()
-            setEditMode(!editMode)
+            await updateElementFunction()
         }
-    }
-
-    async function getElementsInfo() {
-        var elementsResponse = await getElements()
-        var elements = elementsResponse.map((element) => {
-            return { id: element.Id, name: element.Nombre, price: element.Precio }
-        })
-        setElementsData(elements)
     }
 
     useEffect(() => {
@@ -99,11 +147,7 @@ const Elements = () => {
                                             {deleteMode ?
                                                 (
                                                     <img src={trashIcon} style={{ marginLeft: "10px", width: "24px", cursor: "pointer" }}
-                                                        onClick={async() => {
-                                                            var response = await deleteElement(element.id)
-                                                            getElementsInfo()
-                                                            setDeleteMode(!deleteMode)
-                                                        }}>
+                                                        onClick={async() => { deleteElementFunction(element) }}>
                                                     </img>
                                                 ) :
                                                 (
@@ -189,11 +233,7 @@ const Elements = () => {
                                     </div>
                                     <div className="elements-buttons-row">
                                         <button className="elements-button"
-                                            onClick={async () => {
-                                                await createElement(currentNameAdd, 0, currentPriceAdd)
-                                                getElementsInfo()
-                                                closeAddPanel(!addMode)
-                                            }}>
+                                            onClick={async () => { createElementFunction() }}>
                                             Añadir
                                         </button>
                                         <button className="elements-button"

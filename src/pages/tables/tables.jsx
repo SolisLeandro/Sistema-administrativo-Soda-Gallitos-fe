@@ -4,6 +4,7 @@ import editPenIcon from '../../assets/imgs/editPen.svg'
 import cancelIcon from '../../assets/imgs/cancel.svg'
 import trashIcon from '../../assets/imgs/trash.svg'
 import { createTable, updateTable, deleteTable, getTables } from "../../helpers/dbControllers/tablesDTO"
+import Swal from "sweetalert2"
 
 const Tables = () => {
     const [tablesData, setTablesData] = useState([
@@ -26,6 +27,63 @@ const Tables = () => {
 
     const [currentNameAdd, setCurrentNameAdd] = useState("")
 
+    //CRUD
+    //Create
+    async function createTableFunction() {
+        var response = await createTable(currentNameAdd) 
+        if (response.status == 200) {
+            getTablesInfo()
+            Swal.fire("¡Mesa creada correctamente!", "", "success")
+        } else {
+            Swal.fire("¡Error al crear la mesa!", "Ocurrio un error al obtener la respuesta del servidor", "error")
+            console.log(response)
+        }
+        closeAddPanel(!addMode)
+    }
+
+    //Read
+    async function getTablesInfo(){
+        var tablesResponse = await getTables()
+        if(tablesResponse.status == 200){
+            if (tablesResponse.data) {
+                var tables = tablesResponse.data.map((element) => {
+                    return {id: element.Id, name: element.Nombre}
+                })
+                setTablesData(tables)
+                return
+            }
+        }
+        Swal.fire("¡Error al obtener las mesas!", "Ocurrio un error al obtener la respuesta del servidor", "error")
+    }
+
+    //Update
+    async function updateTableFunction() {
+        var response = await updateTable(currentTableEdit.id,currentNameEdit)
+        if (response.status == 200) {
+            getTablesInfo()
+            Swal.fire("¡Mesa actualizada correctamente!", "", "success")
+        } else {
+            Swal.fire("¡Error al actualizar la mesa!", "Ocurrio un error al obtener la respuesta del servidor", "error")
+            console.log(response)
+        }
+        setEditMode(!editMode)
+    }
+
+    //Delete
+    async function deleteTableFunction(element){
+        var response = await deleteTable(element.id)
+        if (response.status == 200) {
+            getTablesInfo()
+            Swal.fire("¡Mesa eliminada correctamente!", "", "success")
+        } else {
+            Swal.fire("¡Error al eliminar la mesa!", "Ocurrio un error al obtener la respuesta del servidor", "error")
+            console.log(response)
+        }
+        setDeleteMode(!deleteMode)
+    }
+
+    //------------------------
+
     function closeAddPanel() {
         setAddMode(!addMode)
         setCurrentNameAdd("")
@@ -33,18 +91,8 @@ const Tables = () => {
 
     async function inputOnKeyDown(event) {
         if (event.key === 'Enter' && editMode) {
-            await updateTable(currentTableEdit.id,currentNameEdit)
-            getTablesInfo()
-            setEditMode(!editMode)
+            await updateTableFunction()
         }
-    }
-
-    async function getTablesInfo(){
-        var tablesResponse = await getTables()
-        var tables = tablesResponse.map((element) => {
-            return {id: element.Id, name: element.Nombre}
-        })
-        setTablesData(tables)
     }
 
     useEffect(() => {
@@ -82,11 +130,7 @@ const Tables = () => {
                                             {deleteMode ?
                                                 (
                                                     <img src={trashIcon} style={{ marginLeft: "10px", width: "24px", cursor: "pointer" }} 
-                                                        onClick={async() => {
-                                                            var response = await deleteTable(element.id)
-                                                            getTablesInfo()
-                                                            setDeleteMode(!deleteMode)
-                                                        }}>
+                                                        onClick={async() => { deleteTableFunction(element) }}>
                                                     </img>
                                                 ) :
                                                 (
@@ -161,11 +205,7 @@ const Tables = () => {
                                     </div>
                                     <div className="tables-buttons-row">
                                         <button className="tables-button"
-                                            onClick={async() => { 
-                                                await createTable(currentNameAdd) 
-                                                getTablesInfo()
-                                                closeAddPanel(!addMode)
-                                            }}>
+                                            onClick={async() => { createTableFunction() }}>
                                             Añadir
                                         </button>
                                         <button className="tables-button"

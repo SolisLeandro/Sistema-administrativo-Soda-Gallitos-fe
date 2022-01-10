@@ -20,11 +20,17 @@
   },
   "homepage": "https://github.com/SolisLeandro/Sistema-administrativo-Soda-Gallitos-fe#readme",
   "dependencies": {
+    "aes-js": "^3.1.2",
     "axios": "^0.24.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "cryptr": "^6.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
-    "react-router-dom": "^5.3.0"
+    "react-router-dom": "^5.3.0",
+    "sjcl": "^1.0.8",
+    "sweetalert2": "^11.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
