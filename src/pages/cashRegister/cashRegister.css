@@ -1,0 +1,250 @@
+.cashRegister-general-div {
+    padding: 5% 7%;
+    width: 100%;
+}
+
+.cashRegister-column {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    height: 100%;
+}
+
+.cashRegister-title {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 43px;
+
+    color: #000000;
+    margin-bottom: 5%;
+}
+
+.cashRegister-subtitle-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 25%;
+}
+
+.cashRegister-subtitle {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 33px;
+
+    color: #000000;
+}
+
+.cashRegister-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 5%;
+    height: 100%;
+    max-height: 92%;
+
+    border-radius: 15px;
+    background-color: #FBF3DF;
+}
+
+.cashRegister-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin: 5% 0%;
+    max-height: 81%;
+    overflow: auto;
+}
+
+.cashRegister-edit-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin: 5% 0%;
+    max-height: 81%;
+    background-color: #FFFBF0;
+    border-radius: 15px;
+}
+
+.cashRegister-subtitle-edit-container {
+    display: flex;
+    align-items: center;
+    width: 92%;
+    justify-content: space-between;
+    padding: 0% 4%;
+}
+
+.cashRegister-dishes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 3% 0%;
+    padding: 0px 20px;
+    padding-right: 11%;
+
+    width: 75%;
+    height: 250px;
+    border-radius: 15px;
+    background-color: #FFFBF0;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.cashRegister-element-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 3% 0%;
+    padding: 0px 20px;
+    padding-right: 11%;
+
+    width: 85%;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #FFFBF0;
+}
+
+.cashRegister-buttons-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 3% 0%;
+    width: 100%;
+}
+
+.cashRegister-text {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 22px;
+    white-space: nowrap;
+    color: #000000;
+}
+
+.cashRegister-button {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 22px;
+    cursor: pointer;
+    background-color: #4989DE;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14.7927px;
+    line-height: 18px;
+    color: white;
+}
+
+.cashRegister-button-2 {
+    width: 130px;
+    height: 40px;
+    border: none;
+    border-radius: 22px;
+    cursor: pointer;
+    background-color: #4989DE;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14.7927px;
+    line-height: 18px;
+    color: white;
+}
+
+.cashRegister-button-disabled {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 22px;
+    background-color: #8f9daf;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14.7927px;
+    line-height: 18px;
+    color: white;
+}
+
+.cashRegister-button-disabled-2 {
+    width: 130px;
+    height: 40px;
+    border: none;
+    border-radius: 22px;
+    background-color: #8f9daf;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14.7927px;
+    line-height: 18px;
+    color: white;
+}
+
+.cashRegister-input {
+    border-color: #dddddd;
+    border-radius: 5px;
+    height: 20px;
+    width: 40%;
+    margin: 12px 0px;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 22px;
+
+    color: #000000;
+}
+
+.cashRegister-input-subtitle {
+    border-color: #dddddd;
+    border-radius: 5px;
+    height: 35px;
+    width: 50%;
+    margin: 19px 0px;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 33px;
+
+    color: #000000;
+}
+
+.cashRegister-add-element-modal {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    padding: 10%;
+}
+
+.cashRegister-add-element-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50%;
+    width: 35%;
+    padding: 5%;
+    border-radius: 15px;
+    background-color: #FBF3DF
+}

@@ -6,6 +6,7 @@ import Dishes from "../dishes/dishes"
 import Elements from "../elements/elements"
 import Tables from "../tables/tables"
 import Kitchen from "../kitchen/kitchen"
+import CashRegister from "../cashRegister/cashRegister"
 
 const Home = () => {
     return (
@@ -21,6 +22,7 @@ const Home = () => {
                     <Route path="/home/elements"> <Elements></Elements></Route>
                     <Route path="/home/tables"> <Tables></Tables></Route>
                     <Route path="/home/kitchen"><Kitchen></Kitchen></Route>
+                    <Route path="/home/cashRegister"><CashRegister></CashRegister></Route>
                 </Switch>
             </div>
         </div>

@@ -101,6 +101,7 @@ const Elements = () => {
     useEffect(() => {
         getElementsInfo()
     }, [])
+    
     return (
         <div className="elements-general-div">
             <h1 className="elements-title">Opciones Elementos</h1>

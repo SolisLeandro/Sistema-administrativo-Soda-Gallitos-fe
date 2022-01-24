@@ -13,7 +13,7 @@ const Sidebar = () => {
                 <div className="sidebar-buttons-div">
                     <Link to="admin" className="sidebar-button">Administrador</Link>
                     <Link to="kitchen" className="sidebar-button">Cocina</Link>
-                    <Link to="cashier" className="sidebar-button">Caja</Link>
+                    <Link to="cashRegister" className="sidebar-button">Caja</Link>
                 </div>
             </div>
             <Link to="/" className="sidebar-logOut" onClick={logOut}>Cerrar Sesión</Link>
