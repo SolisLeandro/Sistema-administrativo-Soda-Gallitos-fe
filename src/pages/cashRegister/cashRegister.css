@@ -115,6 +115,40 @@
     background-color: #FFFBF0;
 }
 
+.cashRegister-element-container-select {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 3% 0%;
+    padding: 0px 20px;
+    padding-right: 11%;
+
+    width: 85%;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #b8f1f3;
+    cursor: pointer;
+}
+
+.cashRegister-element-container-unselect {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 3% 0%;
+    padding: 0px 20px;
+    padding-right: 11%;
+
+    width: 85%;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
 .cashRegister-buttons-row {
     display: flex;
     flex-direction: row;

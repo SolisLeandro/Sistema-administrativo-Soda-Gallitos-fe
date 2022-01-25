@@ -82,6 +82,9 @@ const CashRegister = () => {
     const [addMode, setAddMode] = useState(false)
     const [editMode, setEditMode] = useState(false)
     const [showMode, setShowMode] = useState(false)
+    const [selectMode , setSelectMode] = useState(false)
+
+    const [currentDishesSelect, setCurrentDishesSelect] = useState([])
 
     const [currentTable, setCurrentTable] = useState({})
 
@@ -113,6 +116,7 @@ const CashRegister = () => {
         setCurrentTable(element)
         setEditMode(false)
         setShowMode(true)
+        setSelectMode(false)
     }
 
     function setEditVariables(element) {
@@ -179,17 +183,9 @@ const CashRegister = () => {
 
     //Delete
     async function deleteDishFunction(id) {
-        var response = await deleteDish(id)
-        if (response.status == 200) {
-            getDishesInfo()
-            Swal.fire("¡Platillo eliminado correctamente!", "", "success")
-        } else {
-            Swal.fire("¡Error al eliminar el platillo!", "Ocurrio un error al obtener la respuesta del servidor", "error")
-            console.log(response)
-        }
-        setDeleteMode(false)
-        setShowMode(false)
-        setEditMode(false)
+        let currentDishes = Object.create(currentDishesEdit)
+        currentDishes.splice(currentDishes.findIndex(e => e.id === id), 1);
+        setCurrentDishesEdit(currentDishes)
     }
     //-------------------------------
 
@@ -219,8 +215,40 @@ const CashRegister = () => {
         setEditVariables(element)
         setEditMode(true)
         setShowMode(false)
+        setDeleteDishMode(false)
     }
 
+    function initSelection() {
+        var dishes = []
+        currentTable.dishes.forEach(element => {
+            dishes.push({...element, selected: false})
+        });
+        setCurrentDishesSelect(dishes)
+        setSelectMode(true)
+    }
+    
+    function handleSelectDish(id) {
+        var dishes = Object.create(currentDishesSelect)
+        dishes.forEach(element => {
+            if(element.id == id){
+                element.selected = !element.selected
+            }
+        });
+        setCurrentDishesSelect(dishes)
+    }
+
+    function paySelect(){
+        var newTable = Object.create(currentTable)
+        var newDishes = []
+        currentDishesSelect.forEach(element => {
+            if(!element.selected){
+                newDishes.push({id: element.id, name: element.name, total: element.total})
+            }
+        });
+        newTable.dishes = newDishes
+        setCurrentTable(newTable)
+        setSelectMode(false)
+    }
 
     useEffect(() => {
         getDishesInfo()
@@ -259,7 +287,7 @@ const CashRegister = () => {
                                                                 marginBottom: "5px", cursor: deleteMode ? "pointer" : "",
                                                                 opacity: deleteMode ? "100%" : "0%"
                                                             }}
-                                                            onClick={() => { deleteDishFunction(element.id) }}>
+                                                            onClick={() => { deleteTableFunction(element.id) }}>
                                                         </img>
                                                     </div>
                                                 </div>
@@ -275,7 +303,6 @@ const CashRegister = () => {
                                             disabled={addMode}
                                             onClick={() => {
                                                 setDeleteMode(!deleteMode)
-                                                setEditMode(false)
                                             }}>
                                                 Cancelar
                                         </button>
@@ -286,6 +313,7 @@ const CashRegister = () => {
                                             onClick={() => {
                                                 setDeleteMode(!deleteMode)
                                                 setEditMode(false)
+                                                setShowMode(false)
                                             }}>
                                                 Cancelar mesa
                                         </button>
@@ -344,7 +372,7 @@ const CashRegister = () => {
                                                                                             marginBottom: "5px", cursor: "pointer",
                                                                                             opacity: "100%"
                                                                                         }}
-                                                                                        onClick={() => {}}>
+                                                                                        onClick={() => { deleteDishFunction(element.id) }}>
                                                                                     </img>
 
                                                                                 ) : 
@@ -419,39 +447,76 @@ const CashRegister = () => {
                                 <div>
                                     <div className="cashRegister-subtitle-edit-container">
                                         <h2 className="cashRegister-subtitle">{currentTable.name}</h2>
-                                        <button className="cashRegister-button-2"
-                                            style={{height: "30px"}}
-                                            onClick={() => { setShowAddElementContainer(true) }}>
-                                            Seleccionar
-                                        </button>
+
+                                        {selectMode ?
+                                            (
+                                                <button className="cashRegister-button-2"
+                                                    style={{height: "30px"}}
+                                                    onClick={() => { setSelectMode(false) }}>
+                                                    Cancelar
+                                                </button>
+                                            ) :
+                                            (
+                                                <button className="cashRegister-button-2"
+                                                    style={{height: "30px"}}
+                                                    onClick={() => { initSelection() }}>
+                                                    Seleccionar
+                                                </button>
+                                            )
+                                        }
                                     </div>
                                     <div className="cashRegister-card-container" style={{ height: "80%" }}>
                                         <h2 className="cashRegister-subtitle" style={{ fontSize: "18px" }}>Platillos</h2>
                                         <div className="cashRegister-container" style={{ maxHeight: "26vh", margin: "0px" }}>
                                             <div className="cashRegister-dishes-container">
-                                                {currentTable.dishes.map((element) => {
-                                                        return (
-                                                            <div key={element.id} className="cashRegister-element-container" style={{backgroundColor:"#FFFFFF"}}>
-                                                                <h4 className="cashRegister-text">{element.name}</h4>
+                                                { selectMode ?
+                                                    (
+                                                        currentDishesSelect.map((element) => {
+                                                            return (
+                                                                <div key={element.id} 
+                                                                    className={element.selected ? "cashRegister-element-container-select" : "cashRegister-element-container-unselect"}
+                                                                    onClick={() => {handleSelectDish(element.id)}}>
+                                                                        <h4 className="cashRegister-text">{element.name}</h4>
 
-                                                                <div style={{ display: "flex" }}>
-                                                                    <h4 className="cashRegister-text" style={{ whiteSpace: "nowrap" }}>{element.total}</h4>
-                                                                    <img src={trashIcon} disabled={true}
-                                                                        style={{
-                                                                            marginLeft: "15px", width: "24px",
-                                                                            marginBottom: "5px", cursor: "",
-                                                                            opacity: "0%"
-                                                                        }}>
-                                                                    </img>
+                                                                        <div style={{ display: "flex" }}>
+                                                                            <h4 className="cashRegister-text" style={{ whiteSpace: "nowrap" }}>{element.total}</h4>
+                                                                            <img src={trashIcon} disabled={true}
+                                                                                style={{
+                                                                                    marginLeft: "15px", width: "24px",
+                                                                                    marginBottom: "5px", cursor: "",
+                                                                                    opacity: "0%"
+                                                                                }}>
+                                                                            </img>
+                                                                        </div>
                                                                 </div>
-                                                            </div>
-                                                        )
-                                                    })
+                                                            )
+                                                        })
+                                                    ) : 
+                                                    (
+                                                        currentTable.dishes.map((element) => {
+                                                            return (
+                                                                <div key={element.id} className="cashRegister-element-container" style={{backgroundColor:"#FFFFFF"}}>
+                                                                    <h4 className="cashRegister-text">{element.name}</h4>
+
+                                                                    <div style={{ display: "flex" }}>
+                                                                        <h4 className="cashRegister-text" style={{ whiteSpace: "nowrap" }}>{element.total}</h4>
+                                                                        <img src={trashIcon} disabled={true}
+                                                                            style={{
+                                                                                marginLeft: "15px", width: "24px",
+                                                                                marginBottom: "5px", cursor: "",
+                                                                                opacity: "0%"
+                                                                            }}>
+                                                                        </img>
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    )
                                                 }
-                                                
                                             </div>
                                             <div className="cashRegister-buttons-row">
-                                                    <button className="cashRegister-button-2"
+                                                    <button className= {selectMode ? "cashRegister-button-disabled-2" : "cashRegister-button-2"}
+                                                        disabled = {selectMode}
                                                         onClick={() => { showEditMode(Object.create(currentTable)) }}>
                                                         Editar
                                                     </button>
@@ -465,7 +530,7 @@ const CashRegister = () => {
                                         </div>
 
                                         <div className="cashRegister-buttons-row">
-                                            <button className="cashRegister-button-2"
+                                            <button className = {selectMode ? "cashRegister-button-disabled-2" : "cashRegister-button-2"} disabled={selectMode}
                                                 onClick={() => {
                                                     setEditMode(true)
                                                     setShowMode(false)
@@ -473,9 +538,9 @@ const CashRegister = () => {
                                                 }}>
                                                 Pagar Total
                                             </button>
-                                            <button className="cashRegister-button-2"
+                                            <button className = {selectMode ? "cashRegister-button-2" : "cashRegister-button-disabled-2"} disabled={!selectMode}
                                                 onClick={() => {
-                                                    setShowMode(false)
+                                                    paySelect()
                                                 }}>
                                                 Pagar Seleccion
                                             </button>
