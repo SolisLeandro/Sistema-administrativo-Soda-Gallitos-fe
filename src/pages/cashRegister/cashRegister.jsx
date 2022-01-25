@@ -5,7 +5,7 @@ import editPen from '../../assets/imgs/editPen.svg'
 import cancelIcon from '../../assets/imgs/cancel.svg'
 import trashIcon from '../../assets/imgs/trash.svg'
 import { getTableOrders, payOrder } from "../../helpers/dbControllers/tableOrdersDTO"
-import { getDishes, createDish, deleteDish, updateDish } from "../../helpers/dbControllers/cashRegisterDTO"
+import { getDishes } from "../../helpers/dbControllers/cashRegisterDTO"
 import Swal from "sweetalert2"
 
 const CashRegister = () => {
@@ -96,22 +96,6 @@ const CashRegister = () => {
 
     const [showAddElementContainer, setShowAddElementContainer] = useState(false)
 
-    function closeAddPanel() {
-        setAddMode(!addMode)
-    }
-
-    function inputOnKeyDown(event) {
-        if (event.key === 'Enter' && editMode) {
-            //update
-        }
-    }
-
-    function clearCurrentEdit() {
-        setCurrentNameEdit("")
-        setCurrentDishesEdit([])
-        setCurrentTotalEdit("")
-    }
-
     async function setCurrentShow(element) {
         setCurrentTable(element)
         setEditMode(false)
@@ -122,23 +106,6 @@ const CashRegister = () => {
     function setEditVariables(element) {
         setCurrentDishesEdit(Object.create(element.dishes))
         setCurrentTotalEdit(element.total)
-    }
-
-    //CRUD
-    //Create
-    async function createDishFunction() {
-        var elementsId = currentElementsEdit.map((element) => {
-            return { id: element.id }
-        })
-        var response = await createDish(elementsId, currentNameEdit, currentTotalEdit)
-        if (response.status == 200) {
-            getDishesInfo()
-            Swal.fire("¡Platillo creado correctamente!", "", "success")
-        } else {
-            Swal.fire("¡Error al crear el Platillo!", "Ocurrio un error al obtener la respuesta del servidor", "error")
-            console.log(response)
-        }
-        closeAddPanel(!addMode)
     }
 
     //Read
@@ -199,11 +166,15 @@ const CashRegister = () => {
         }
     }
 
-    //Delete
-    async function deleteDishFunction(id) {
-        let currentDishes = Object.create(currentDishesEdit)
-        currentDishes.splice(currentDishes.findIndex(e => e.id === id), 1);
-        setCurrentDishesEdit(currentDishes)
+    async function payOrderFuction(id) {
+        var response = await payOrder(id)
+        if (response.status == 200) {
+            await getTableOrdersInfo()
+            Swal.fire("¡Orden cancelada correctamente!", "", "success")
+        } else {
+            Swal.fire("¡Error al cancelar la orden!", "Ocurrio un error al obtener la respuesta del servidor", "error")
+            console.log(response)
+        }
     }
     //-------------------------------
 
@@ -219,14 +190,11 @@ const CashRegister = () => {
     function inputOnKeyDownPriceEdit(event) {
         if (event.key === 'Enter' && editPriceMode) {
             var index = currentDishesEdit.findIndex(elem => elem.id === currentDishId)
-            var newObj = Object.create(currentDishesEdit[index])
-            newObj.total = currentDishPriceEdit
-            currentDishesEdit[index] = newObj
+            var newObj = Object.create(currentDishesEdit)
+            newObj[index].total = currentDishPriceEdit
+            setCurrentDishesEdit(newObj)
             setEditPriceMode(false)
         }
-        //var newCurrentTable = Object.create(currentTable)
-        //newCurrentTable.dishes = Object.create(currentDishesEdit)
-        //setCurrentDishesEdit(newCurrentTable)
     }
 
     function showEditMode(element){
@@ -306,7 +274,7 @@ const CashRegister = () => {
                                                                 marginBottom: "5px", cursor: deleteMode ? "pointer" : "",
                                                                 opacity: deleteMode ? "100%" : "0%"
                                                             }}
-                                                            onClick={() => { deleteTableFunction(element.id) }}>
+                                                            onClick={() => { payOrderFuction(element.id) }}>
                                                         </img>
                                                     </div>
                                                 </div>
