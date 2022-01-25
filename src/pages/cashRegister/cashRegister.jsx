@@ -154,19 +154,7 @@ const CashRegister = () => {
         Swal.fire("¡Error al obtener las ordenes!", "Ocurrio un error al obtener la respuesta del servidor", "error")
     }
 
-    //Update
-    async function payOrderFuction() {
-        var response = await payOrder(currentTable.id)
-        if (response.status == 200) {
-            await getTableOrdersInfo()
-            Swal.fire("¡Orden pagada correctamente!", "", "success")
-        } else {
-            Swal.fire("¡Error al pagar la orden!", "Ocurrio un error al obtener la respuesta del servidor", "error")
-            console.log(response)
-        }
-    }
-
-    async function payOrderFuction(id) {
+    async function payOrderFuction(id = currentTable.id) {
         var response = await payOrder(id)
         if (response.status == 200) {
             await getTableOrdersInfo()
@@ -234,6 +222,10 @@ const CashRegister = () => {
         newTable.dishes = newDishes
         setCurrentTable(newTable)
         setSelectMode(false)
+        if (newDishes.length < 1) {
+            payOrderFuction()
+            setShowMode(false)
+        }
     }
 
     useEffect(() => {
@@ -251,7 +243,7 @@ const CashRegister = () => {
                     <div className="cashRegister-column">
                         <div className="cashRegister-subtitle-container">
                             <h2 className="cashRegister-subtitle">Mesas</h2>
-                            <h2 className="cashRegister-subtitle" style={{ fontSize: "18px", cursor: "pointer" }} onClick={() => { getTableOrdersInfo }}>
+                            <h2 className="cashRegister-subtitle" style={{ fontSize: "18px", cursor: "pointer" }} onClick={() => { getTableOrdersInfo() }}>
                                 Refrescar mesas 
                                 <img src={reloadIcon} style={{width: "14px", margin: "0px 8px"}}></img>
                             </h2>
