@@ -4,7 +4,7 @@ import reloadIcon from '../../assets/imgs/reload.svg'
 import editPen from '../../assets/imgs/editPen.svg'
 import cancelIcon from '../../assets/imgs/cancel.svg'
 import trashIcon from '../../assets/imgs/trash.svg'
-import { getElements } from "../../helpers/dbControllers/elementsDTO"
+import { getTableOrders, payOrder } from "../../helpers/dbControllers/tableOrdersDTO"
 import { getDishes, createDish, deleteDish, updateDish } from "../../helpers/dbControllers/cashRegisterDTO"
 import Swal from "sweetalert2"
 
@@ -162,21 +162,39 @@ const CashRegister = () => {
         Swal.fire("¡Error al obtener los platillos!", "Ocurrio un error al obtener la respuesta del servidor", "error")
     }
 
+    async function getTableOrdersInfo() {
+        var response = await getTableOrders()
+
+        if (response.status == 200 && response.data) {
+            if (response.data.length > 0) {
+                var orders = response.data[0].map((element) => {
+                    var total = 0
+                    var table = element.tab[0]
+                    var dishes = table.plat.map((elemento) => {
+                        total=total=elemento.Precio
+                        return { id: elemento.Id, name: elemento.Nombre, total: elemento.Precio }
+                    })
+                    return { id: element.Id, name: table.Nombre, total, dishes }
+                })
+                console.log(orders)
+                await setTablesData(orders)
+                return
+            } else {
+                setTablesData([])
+                return
+            }
+        }
+        Swal.fire("¡Error al obtener las ordenes!", "Ocurrio un error al obtener la respuesta del servidor", "error")
+    }
+
     //Update
-    async function updateDishFunction() {
-        var elementsId = currentElementsEdit.map((element) => {
-            return { id: element.id }
-        })
-        var response = await updateDish(currentDish.id, elementsId, currentNameEdit, currentTotalEdit)
+    async function payOrderFuction() {
+        var response = await payOrder(currentTable.id)
         if (response.status == 200) {
-            await getDishesInfo()
-            var index = dishesData.findIndex(elem => elem.id === currentDish.id)
-            var dish = dishesData[index]
-            console.log(dish)
-            setCurrentShow(Object.create(dish))
-            Swal.fire("¡Platillo creado correctamente!", "", "success")
+            await getTableOrdersInfo()
+            Swal.fire("¡Orden pagada correctamente!", "", "success")
         } else {
-            Swal.fire("¡Error al crear el platillo!", "Ocurrio un error al obtener la respuesta del servidor", "error")
+            Swal.fire("¡Error al pagar la orden!", "Ocurrio un error al obtener la respuesta del servidor", "error")
             console.log(response)
         }
     }
@@ -251,6 +269,7 @@ const CashRegister = () => {
     }
 
     useEffect(() => {
+        getTableOrdersInfo()
         getDishesInfo()
     }, [])
 
@@ -264,7 +283,7 @@ const CashRegister = () => {
                     <div className="cashRegister-column">
                         <div className="cashRegister-subtitle-container">
                             <h2 className="cashRegister-subtitle">Mesas</h2>
-                            <h2 className="cashRegister-subtitle" style={{ fontSize: "18px", cursor: "pointer" }} onClick={() => {  }}>
+                            <h2 className="cashRegister-subtitle" style={{ fontSize: "18px", cursor: "pointer" }} onClick={() => { getTableOrdersInfo }}>
                                 Refrescar mesas 
                                 <img src={reloadIcon} style={{width: "14px", margin: "0px 8px"}}></img>
                             </h2>
@@ -532,9 +551,9 @@ const CashRegister = () => {
                                         <div className="cashRegister-buttons-row">
                                             <button className = {selectMode ? "cashRegister-button-disabled-2" : "cashRegister-button-2"} disabled={selectMode}
                                                 onClick={() => {
-                                                    setEditMode(true)
+                                                    setEditMode(false)
                                                     setShowMode(false)
-                                                    setEditVariables(Object.create(currentTable))
+                                                    payOrderFuction()
                                                 }}>
                                                 Pagar Total
                                             </button>
